@@ -5,8 +5,8 @@
 ═══════════════════════════════════════════ */
 
 /* ── CONFIG: Replace with your Supabase credentials ── */
-const SUPABASE_URL = https://xwpxhucapgichdcazpay.supabase.co;
-const SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3cHhodWNhcGdpY2hkY2F6cGF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNDkxNjksImV4cCI6MjA5MzYyNTE2OX0.xSscCqW8coYMQo3kTGv4i0kcMXTSec9o892TZEnrSbE;
+const SUPABASE_URL = 'https://xwpxhucapgichdcazpay.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3cHhodWNhcGdpY2hkY2F6cGF5Iiwicm9sZSI6IFub24iLCJpYXQiOmjE3NzgwNDkxNjksImV4cCI6MjA5MzYyNTE2OX0.xSscCqW8coYMQo3kTGv4i0kcMXTSec9o892TZEnrSbE';
 
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
