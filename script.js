@@ -12,7 +12,7 @@ const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* ── STATE ── */
-let currentUser = null;
+let currentUser = { id: 'local-user' };
 let trades = [];
 let accounts = [];
 let transfers = [];
