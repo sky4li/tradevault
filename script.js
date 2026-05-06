@@ -34,23 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupCalendarNav();
   setupTransferTypeToggle();
 
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    currentUser = session.user;
-    enterApp();
-  } else {
-    showAuthScreen();
-  }
-
-  sb.auth.onAuthStateChange((_event, session) => {
-    if (session) {
-      currentUser = session.user;
-      enterApp();
-    } else {
-      currentUser = null;
-      showAuthScreen();
-    }
-  });
+ enterApp();
 });
 
 /* ══════════════════════════════════════════
@@ -76,70 +60,7 @@ function toggleTheme() {
 document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 document.getElementById('theme-checkbox')?.addEventListener('change', toggleTheme);
 
-/* ══════════════════════════════════════════
-   AUTH
-══════════════════════════════════════════ */
-function showAuthScreen() {
-  document.getElementById('auth-screen').classList.remove('hidden');
-  document.getElementById('app').classList.add('hidden');
-}
-function enterApp() {
-  document.getElementById('auth-screen').classList.add('hidden');
-  document.getElementById('app').classList.remove('hidden');
-  loadUserProfile();
-  loadData();
-}
 
-function setupAuthTabs() {
-  document.querySelectorAll('.auth-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      const target = tab.dataset.tab;
-      document.getElementById('login-form').classList.toggle('hidden', target !== 'login');
-      document.getElementById('signup-form').classList.toggle('hidden', target !== 'signup');
-    });
-  });
-}
-
-document.getElementById('login-btn').addEventListener('click', async () => {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-password').value;
-  const errEl = document.getElementById('auth-error');
-  errEl.textContent = '';
-  if (!email || !pass) return (errEl.textContent = 'Please fill in all fields.');
-  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
-  if (error) errEl.textContent = error.message;
-});
-
-document.getElementById('signup-btn').addEventListener('click', async () => {
-  const name = document.getElementById('signup-name').value.trim();
-  const email = document.getElementById('signup-email').value.trim();
-  const pass = document.getElementById('signup-password').value;
-  const errEl = document.getElementById('signup-error');
-  errEl.textContent = '';
-  if (!name || !email || !pass) return (errEl.textContent = 'Please fill in all fields.');
-  if (pass.length < 6) return (errEl.textContent = 'Password must be at least 6 characters.');
-  const { error } = await sb.auth.signUp({
-    email, password: pass,
-    options: { data: { full_name: name } }
-  });
-  if (error) errEl.textContent = error.message;
-  else errEl.style.color = 'var(--green)', errEl.textContent = 'Account created! Check your email to confirm.';
-});
-
-document.getElementById('logout-btn').addEventListener('click', async () => {
-  await sb.auth.signOut();
-});
-
-async function loadUserProfile() {
-  if (!currentUser) return;
-  const name = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
-  document.getElementById('user-name').textContent = name;
-  document.getElementById('user-avatar').textContent = name.charAt(0).toUpperCase();
-  document.getElementById('settings-email').value = currentUser.email;
-  document.getElementById('settings-name').value = name;
-}
 
 /* ══════════════════════════════════════════
    NAVIGATION
