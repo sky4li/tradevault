@@ -61,6 +61,15 @@ document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 document.getElementById('theme-checkbox')?.addEventListener('change', toggleTheme);
 
 
+/* ══════════════════════════════════════════*/
+
+
+function enterApp() {
+  document.getElementById('app').classList.remove('hidden');
+  loadData();
+}
+
+
 
 /* ══════════════════════════════════════════
    NAVIGATION
@@ -849,25 +858,7 @@ function updateDailyLossTracker() {
 /* ══════════════════════════════════════════
    SETTINGS
 ══════════════════════════════════════════ */
-document.getElementById('save-profile-btn')?.addEventListener('click', async () => {
-  const name = document.getElementById('settings-name').value.trim();
-  const { error } = await sb.auth.updateUser({ data: { full_name: name } });
-  if (error) return showToast('Error updating profile', 'error');
-  showToast('Profile updated!', 'success');
-  loadUserProfile();
-});
 
-document.getElementById('change-pwd-btn')?.addEventListener('click', async () => {
-  const pwd = document.getElementById('new-password').value;
-  const confirm = document.getElementById('confirm-password').value;
-  if (pwd !== confirm) return showToast('Passwords do not match', 'error');
-  if (pwd.length < 6) return showToast('Password too short', 'error');
-  const { error } = await sb.auth.updateUser({ password: pwd });
-  if (error) return showToast('Error: ' + error.message, 'error');
-  showToast('Password updated!', 'success');
-  document.getElementById('new-password').value = '';
-  document.getElementById('confirm-password').value = '';
-});
 
 document.getElementById('save-prefs-btn')?.addEventListener('click', () => {
   const currency = document.getElementById('currency-select').value;
